@@ -10,6 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@reach/dialog": "^0.1.2",
     "@reach/router": "^1.2.1",
     "normalize.css": "https://github.com/GeordieP/normalize.css",
     "react": "^16.7.0-alpha.2",

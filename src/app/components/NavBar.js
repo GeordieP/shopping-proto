@@ -4,15 +4,12 @@ import { Link } from '@reach/router';
 
 export default () => (
   <Nav>
-    <PageLink to='/' primary>List</PageLink>
-    <PageLink to='/tags'>Tags</PageLink>
-    <PageLink to='/items'>Items</PageLink>
-    <PageLink to='/settings'>Settings</PageLink>
+    <Link to='/'>List</Link>
+    <Link to='/tags'>Tags</Link>
+    <Link to='/items'>Items</Link>
+    <Link to='/settings'>Settings</Link>
   </Nav>
 );
-
-const PageLink = styled(Link)`
-`;
 
 const Nav = styled.nav`
   display: flex;

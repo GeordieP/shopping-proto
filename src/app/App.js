@@ -6,23 +6,27 @@ import 'normalize.css';
 import './css/global.css';
 import './css/layout.css';
 
+// reach ui styles
+// https://ui.reach.tech/styling#including-base-styles
+import '@reach/dialog/styles.css';
+
 // components
 import NavBar from './components/NavBar';
 
-// pages
-const List = () => ( <h1>List Page</h1> );
-const Tags = () => ( <h1>Tags Page</h1> );
-const Items = () => ( <h1>Items Page</h1> );
-const Settings = () => ( <h1>Settings Page</h1> );
+// views
+import MainListView from './views/MainListView';
+import TagsListView from './views/TagsListView';
+import ItemsListView from './views/ItemsListView';
+import SettingsView from './views/SettingsView';
 
 export default () => {
   return (
     <main>
       <Router id='content'>
-        <List path='/' />
-        <Tags path='/tags' />
-        <Items path='/items' />
-        <Settings path='/settings' />
+        <MainListView path='/' />
+        <TagsListView path='/tags' />
+        <ItemsListView path='/items' />
+        <SettingsView path='/settings' />
       </Router>
 
       <NavBar />
