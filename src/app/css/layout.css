@@ -1,0 +1,17 @@
+main {
+  display: grid;
+  grid-template-columns: 100vw;
+  grid-template-rows: 90vh 10vh;
+  grid-template-areas:
+    "Layout_Content"
+    "Layout_Nav";
+}
+
+nav {
+  grid-area: Layout_Nav;
+}
+
+#content {
+  grid-area: Layout_Content;
+  overflow: auto;
+}

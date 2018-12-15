@@ -1,0 +1,27 @@
+:root {
+  font-size: 15px;
+}
+
+html, body, #root, main {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+a, a:active, a:visited {
+  color: dodgerblue;
+  text-decoration: none;
+}
+
+a[aria-current='page'] {
+  color: skyblue;
+}
+
+@media screen and (min-width: 760px) {
+  :root {
+    font-size: 12pt;
+  }
+}
