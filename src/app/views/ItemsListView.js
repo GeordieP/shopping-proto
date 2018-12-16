@@ -1,21 +1,33 @@
 import React, { useContext } from 'react';
-import { StorageContext } from '../context';
 import styled from 'styled-components';
 
-const Item = ({ id, name, price }) => (
-  <p>${price} {name}</p>
+// context & state management actions
+import { ItemsContext } from '../context';
+import { actions } from '../state/items';
+
+const Item = ({ id, name, price, onClick }) => (
+  <p onClick={onClick}>${price} {name}</p>
 );
 
-const ItemList = ({ items }) =>
-  items.map(i => <Item {...i} key={i.id} />)
+const ItemList = ({ items, onRemoveItem }) => items.map(i =>
+  <Item
+    {...i}
+    key={i.id}
+    onClick={onRemoveItem.bind(null, i.id)}
+  />
+);
 
 export default () => {
-  const { items } = useContext(StorageContext);
+  const { state: items, dispatch } = useContext(ItemsContext);
+
+  const onRemoveItem = (id) => {
+    dispatch(actions.removeItem(id));
+  }
 
   return (
     <>
       <h1>Items ({ items.length })</h1>
-      <ItemList items={items} />
+      <ItemList items={items} onRemoveItem={onRemoveItem} />
     </>
   );
 }

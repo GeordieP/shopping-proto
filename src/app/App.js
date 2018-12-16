@@ -10,6 +10,9 @@ import './css/layout.css';
 // https://ui.reach.tech/styling#including-base-styles
 import '@reach/dialog/styles.css';
 
+// context
+import { ItemsContextProvider } from './context';
+
 // components
 import NavBar from './components/NavBar';
 
@@ -19,7 +22,7 @@ import TagsListView from './views/TagsListView';
 import ItemsListView from './views/ItemsListView';
 import SettingsView from './views/SettingsView';
 
-export default () => {
+const App = () => {
   return (
     <main>
       <Router id='content'>
@@ -33,3 +36,9 @@ export default () => {
     </main>
   );
 }
+
+export default () => (
+  <ItemsContextProvider>
+    <App />
+  </ItemsContextProvider>
+);

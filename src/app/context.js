@@ -1,6 +1,19 @@
-import { createContext } from 'react';
+import React, { createContext, useReducer } from 'react';
 
-// Mock data stored on device as json
-import storageData from './storage_data';
+// ITEMS
+import {
+  reducer as itemsReducer,
+  initialState as itemsInitialState
+} from './state/items';
 
-export const StorageContext = createContext(storageData);
+// ITEMS
+export const ItemsContext = createContext();
+export const ItemsContextProvider = ({ children, ...props}) => {
+  const [state, dispatch] = useReducer(itemsReducer, itemsInitialState);
+
+  return (
+    <ItemsContext.Provider value={{ state, dispatch}} {...props}>
+      { children }
+    </ItemsContext.Provider>
+  );
+}

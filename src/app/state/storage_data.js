@@ -2,7 +2,8 @@ let count = 0;
 
 const newItem = (name, price) => ({
   id: count++, // temp id, just to serve as a unique key
-  name, price
+  name,
+  price,
 });
 
 export default({
