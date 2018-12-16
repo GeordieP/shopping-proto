@@ -11,7 +11,10 @@ import './css/layout.css';
 import '@reach/dialog/styles.css';
 
 // context
-import { ItemsContextProvider } from './context';
+import {
+  ItemsContextProvider,
+  ListContextProvider
+} from './context';
 
 // components
 import NavBar from './components/NavBar';
@@ -39,6 +42,8 @@ const App = () => {
 
 export default () => (
   <ItemsContextProvider>
-    <App />
+    <ListContextProvider>
+      <App />
+    </ListContextProvider>
   </ItemsContextProvider>
 );

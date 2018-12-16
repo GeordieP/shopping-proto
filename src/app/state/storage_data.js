@@ -4,9 +4,11 @@ const newItem = (name, price) => ({
   id: count++, // temp id, just to serve as a unique key
   name,
   price,
+  completed: false
 });
 
 export default({
+  list: [],
   items: [
     newItem('Corn', '0.00'),
     newItem('Rice', '0.00'),
