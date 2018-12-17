@@ -1,5 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 
+// -- IMPORTS -- //
+
 // ITEMS
 import {
   reducer as itemsReducer,
@@ -12,26 +14,35 @@ import {
   initialState as listInitialState
 } from './state/listState';
 
+// -- CONTEXT -- //
+
 // ITEMS
 export const ItemsContext = createContext();
-export const ItemsContextProvider = ({ children, ...props}) => {
-  const [state, dispatch] = useReducer(itemsReducer, itemsInitialState);
-
-  return (
-    <ItemsContext.Provider value={{ state, dispatch }} {...props}>
-      { children }
-    </ItemsContext.Provider>
-  );
-}
+export const ItemsContextProvider = createProvider(
+  itemsReducer,
+  itemsInitialState,
+  ItemsContext
+);
 
 // LIST
 export const ListContext = createContext();
-export const ListContextProvider = ({ children, ...props}) => {
-  const [state, dispatch] = useReducer(listReducer, listInitialState);
+export const ListContextProvider = createProvider(
+  listReducer,
+  listInitialState,
+  ListContext
+);
 
-  return (
-    <ListContext.Provider value={{ state, dispatch }} {...props}>
-      { children }
-    </ListContext.Provider>
-  );
+// -- MISC -- //
+
+// Helper to create a generic provider component with the necessary bindings.
+function createProvider(reducer, initialState, context) {
+  return ({ children, ...props }) => {
+    const [ state, dispatch ] = useReducer(reducer, initialState);
+
+    return (
+      <context.Provider value={{ state, dispatch }} {...props}>
+        { children}
+      </context.Provider>
+    );
+  }
 }
