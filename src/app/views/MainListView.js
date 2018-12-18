@@ -5,6 +5,12 @@ import styled from 'styled-components';
 import { ListContext } from '../context';
 import { actions as listActions } from '../state/listState';
 
+// hooks
+import useFilterState from '../hooks/useFilterState';
+
+// components
+import FilterBar from '../components/FilterBar';
+
 const Item = ({ name, price, completed, onComplete, onRemove }) => (
   <div>
     <Btn onClick={onRemove}>-</Btn>
@@ -13,8 +19,12 @@ const Item = ({ name, price, completed, onComplete, onRemove }) => (
   </div>
 );
 
-const List = ({ listItems, onCompleteItem, onRemoveItem }) =>
-  listItems.map(i =>
+const List = ({ items, onRemoveItem, onCompleteItem, filters }) => {
+  const filteredItems = filters.reduce((itms, filterFn) => {
+    return itms.filter(filterFn);
+  }, items);
+
+  return filteredItems.map(i =>
     <Item
       {...i}
       key={i.id}
@@ -22,9 +32,11 @@ const List = ({ listItems, onCompleteItem, onRemoveItem }) =>
       onComplete={onCompleteItem.bind(null, i.id)}
     />
   );
+}
 
 export default () => {
   const { state: listItems, dispatch: listDispatch } = useContext(ListContext);
+  const { filters, updateFilter, removeFilter } = useFilterState();
 
   const onCompleteItem = (id) => {
     listDispatch(listActions.completeListItem(id));
@@ -36,11 +48,13 @@ export default () => {
 
   return (
     <>
+      <FilterBar updateFilter={updateFilter} removeFilter={removeFilter} />
       <h1>List ({ listItems.length })</h1>
       <List
-        listItems={listItems}
+        items={listItems}
         onCompleteItem={onCompleteItem}
         onRemoveItem={onRemoveItem}
+        filters={filters}
       />
     </>
   );
