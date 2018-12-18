@@ -7,7 +7,7 @@ import { actions as itemsActions } from '../state/itemsState';
 import { actions as listActions } from '../state/listState';
 
 // hooks
-import useFilterState from '../hooks/useFilterState';
+import useFilterState, { applyFilters } from '../hooks/useFilterState';
 
 // components
 import FilterBar from '../components/FilterBar';
@@ -20,12 +20,8 @@ const Item = ({ name, price, onRemove, onListify }) => (
   </div>
 );
 
-const ItemList = ({ items, onRemoveItem, onListifyItem, filters }) => {
-  const filteredItems = filters.reduce((itms, filterFn) => {
-    return itms.filter(filterFn);
-  }, items);
-
-  return filteredItems.map(i =>
+const ItemList = ({ items, onRemoveItem, onListifyItem }) => {
+  return items.map(i =>
     <Item
       {...i}
       key={i.id}
@@ -36,9 +32,10 @@ const ItemList = ({ items, onRemoveItem, onListifyItem, filters }) => {
 }
 
 export default () => {
-  const { state: items, dispatch: itemsDispatch } = useContext(ItemsContext);
+  const { state, dispatch: itemsDispatch } = useContext(ItemsContext);
   const { dispatch: listDispatch } = useContext(ListContext);
   const { filters, updateFilter, removeFilter } = useFilterState();
+  const items = applyFilters(filters, state);
 
   const onRemoveItem = (id) => {
     itemsDispatch(itemsActions.removeItem(id));
@@ -51,6 +48,7 @@ export default () => {
   return (
     <>
       <FilterBar updateFilter={updateFilter} removeFilter={removeFilter} />
+
       <h1>Items ({ items.length })</h1>
       <ItemList
         items={items}

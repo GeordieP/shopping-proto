@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import produce from 'immer';
 
-const useFilterState = () => {
+export default () => {
   const [filterState, setFilterState] = useState({});
 
   const updateFilter = (name, filter) => {
@@ -25,4 +25,5 @@ const useFilterState = () => {
   };
 }
 
-export default useFilterState;
+export const applyFilters = (filters, items) =>
+  filters.reduce((accumulator, filter) => accumulator.filter(filter), items);
