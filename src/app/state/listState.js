@@ -5,9 +5,9 @@ import storage from './storage_data';
 export const initialState = storage.list;
 
 // action types
-const addListItem = 'LIST_ITEM_ADD';
-const setCompletedStatus = 'LIST_ITEM_SET_COMPLETED';
-const removeListItem = 'LIST_ITEM_REMOVE';
+const addListItem = Symbol();
+const setCompletedStatus = Symbol();
+const removeListItem = Symbol();
 
 export const actions = {
   addListItem: (item) => ({

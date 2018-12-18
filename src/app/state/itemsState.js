@@ -5,8 +5,8 @@ import storage from './storage_data';
 export const initialState = storage.items;
 
 // action types
-const addItem = 'ITEM_ADD';
-const removeItem = 'ITEM_REMOVE';
+const addItem = Symbol()
+const removeItem = Symbol();
 
 export const actions = {
   addItem: (item) => ({
