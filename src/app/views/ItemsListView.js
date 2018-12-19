@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import { Router } from '@reach/router';
 
 // context & state management
-import { ItemsContext, ListContext } from '../context';
+import { ItemsContext } from '../context';
 import { actions as itemsActions } from '../state/itemsState';
-import { actions as listActions } from '../state/listState';
 
 // hooks
 import useFilterState, { applyFilters } from '../hooks/useFilterState';
@@ -37,17 +36,16 @@ const ItemList = ({ items, onRemoveItem, onListifyItem, onEditItem }) => {
 }
 
 export default ({ navigate }) => {
-  const { state, dispatch: itemsDispatch } = useContext(ItemsContext);
-  const { dispatch: listDispatch } = useContext(ListContext);
+  const { state, dispatch } = useContext(ItemsContext);
   const { filters, updateFilter, removeFilter } = useFilterState();
   const items = applyFilters(filters, state);
 
   const onRemoveItem = (id) => {
-    itemsDispatch(itemsActions.removeItem(id));
+    dispatch(itemsActions.removeItem(id));
   }
 
   const onListifyItem = (item) => {
-    listDispatch(listActions.addListItem(item));
+    dispatch(itemsActions.listifyItem(item.id));
   }
 
   const onEditItem = (itemID) => navigate(`edit/${itemID}`);
@@ -71,5 +69,4 @@ export default ({ navigate }) => {
       </Router>
     </>
   );
-
 }

@@ -3,8 +3,8 @@ import React, {
 } from 'react';
 import produce from 'immer';
 
-export default () => {
-  const [filterState, setFilterState] = useState({});
+export default (defaultFilters = {}) => {
+  const [filterState, setFilterState] = useState(defaultFilters);
 
   const updateFilter = (name, filter) => {
     setFilterState(produce(filterState, draft => {

@@ -25,6 +25,30 @@ export const actions = {
     id,
     newFields
   }),
+
+  completeItem: (id) => ({
+    type: updateItem,
+    id,
+    newFields: { completed: true }
+  }),
+
+  uncompleteItem: (id) => ({
+    type: updateItem,
+    id,
+    newFields: { completed: false }
+  }),
+
+  listifyItem: (id) => ({
+    type: updateItem,
+    id,
+    newFields: { listed: true }
+  }),
+
+  unlistifyItem: (id) => ({
+    type: updateItem,
+    id,
+    newFields: { listed: false }
+  }),
 };
 
 export const reducer = (state, action) => {

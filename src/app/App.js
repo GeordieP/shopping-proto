@@ -13,7 +13,6 @@ import '@reach/dialog/styles.css';
 // context
 import {
   ItemsContextProvider,
-  ListContextProvider
 } from './context';
 
 // components
@@ -42,8 +41,6 @@ const App = () => {
 
 export default () => (
   <ItemsContextProvider>
-    <ListContextProvider>
-      <App />
-    </ListContextProvider>
+    <App />
   </ItemsContextProvider>
 );

@@ -6,6 +6,7 @@ const newItem = (name, price, tags = []) => ({
   price,
   tags,
   completed: false,
+  listed: false,
 });
 
 export default({
