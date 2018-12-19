@@ -7,6 +7,7 @@ export const initialState = storage.items;
 // action types
 const addItem = Symbol()
 const removeItem = Symbol();
+const updateItem = Symbol();
 
 export const actions = {
   addItem: (item) => ({
@@ -17,6 +18,12 @@ export const actions = {
   removeItem: (id) => ({
     type: removeItem,
     id
+  }),
+
+  updateItem: (id, newFields) => ({
+    type: updateItem,
+    id,
+    newFields
   }),
 };
 
@@ -36,6 +43,15 @@ export const reducer = (state, action) => {
       const index = draft.findIndex(i => i.id === action.id);
       // TODO: handle index -1
       draft.splice(index, 1)
+    });
+
+    case updateItem: return produce(state, draft => {
+      const index = draft.findIndex(i => i.id === action.id);
+
+      draft[index] = {
+        ...draft[index],
+        ...action.newFields
+      }
     });
 
     default: return state;
