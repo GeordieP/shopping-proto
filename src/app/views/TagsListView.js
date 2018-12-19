@@ -8,8 +8,11 @@ import { Router } from '@reach/router';
 import { TagsContext } from '../context';
 import { actions } from '../state/tagsState';
 
+// hooks
+import useFilterState, { applyFilters } from '../hooks/useFilterState';
+
 // components
-import StyledDialog from '../components/StyledDialog';
+import TagFilterBar from '../components/TagFilterBar';
 import { EditTagModal } from '../components/EditTag';
 
 const Tag = ({ id, name, onRemove, onEdit }) => {
@@ -34,8 +37,10 @@ const TagList = ({ tags, onRemoveTag, onEditTag }) => {
 }
 
 export default ({ navigate }) => {
-  const { state: tags, dispatch } = useContext(TagsContext);
-
+  const { state, dispatch } = useContext(TagsContext);
+  const { filters, updateFilter, removeFilter } = useFilterState();
+  const tags = applyFilters(filters, state);
+  
   const onRemoveTag = (id) => {
     dispatch(actions.removeTag(id));
   }
@@ -45,6 +50,8 @@ export default ({ navigate }) => {
 
   return (
     <>
+      <TagFilterBar updateFilter={updateFilter} removeFilter={removeFilter} />
+
       <TagList
         tags={tags}
         onRemoveTag={onRemoveTag}

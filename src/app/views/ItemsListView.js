@@ -61,7 +61,6 @@ export default ({ navigate }) => {
         onRemoveItem={onRemoveItem}
         onListifyItem={onListifyItem}
         onEditItem={onEditItem}
-        filters={filters}
       />
 
       <Router>
