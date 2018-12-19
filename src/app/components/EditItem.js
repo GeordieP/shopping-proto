@@ -2,9 +2,13 @@ import React, {
   useState,
   useContext
 } from 'react';
-import { Dialog, DialogOverlay, DialogContent } from '@reach/dialog';
+
+// context & state management
 import { ItemsContext } from '../context';
 import { actions } from '../state/itemsState';
+
+// components
+import StyledDialog from './StyledDialog';
 
 const EditItem = ({ itemID, onCancel }) => {
   if (itemID == null) return null;
@@ -54,21 +58,14 @@ const EditItem = ({ itemID, onCancel }) => {
 
 export default EditItem;
 
-const dialogContentStyles = {
-  width: '95%',
-  borderRadius: '5px'
-};
-
 export const EditItemModal = (props) => {
   // we don't handle modal showing/hiding state at this level.
   // However, when the modal is dismissed by clicking outside the content area,
   // call the onCancel fn, passed via props.
 
   return (
-    <DialogOverlay onDismiss={props.onCancel}>
-      <DialogContent style={dialogContentStyles}>
-        <EditItem {...props} />
-      </DialogContent>
-    </DialogOverlay>
+    <StyledDialog onDismiss={props.onCancel}>
+      <EditItem {...props} />
+    </StyledDialog>
   );
 }

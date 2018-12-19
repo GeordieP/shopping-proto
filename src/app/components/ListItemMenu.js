@@ -1,10 +1,11 @@
-import React, {
-  useState,
-  useContext
-} from 'react';
-import { DialogOverlay, DialogContent } from '@reach/dialog';
+import React, { useContext } from 'react';
+
+// context & state management
 import { ItemsContext } from '../context';
 import { actions } from '../state/itemsState';
+
+// components
+import StyledDialog from './StyledDialog';
 
 const ListItemMenu = ({ navigate, itemID, onClose }) => {
   if (itemID == null) return null;
@@ -35,17 +36,10 @@ const ListItemMenu = ({ navigate, itemID, onClose }) => {
 
 export default ListItemMenu;
 
-const dialogContentStyles = {
-  width: '95%',
-  borderRadius: '5px'
-};
-
 export const ListItemMenuModal = (props) => {
   return (
-    <DialogOverlay onDismiss={props.onClose}>
-      <DialogContent style={dialogContentStyles}>
-        <ListItemMenu {...props} />
-      </DialogContent>
-    </DialogOverlay>
+    <StyledDialog onDismiss={props.onClose}>
+      <ListItemMenu {...props} />
+    </StyledDialog>
   );
 }
