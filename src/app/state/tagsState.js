@@ -39,16 +39,31 @@ export const actions = {
 
 export const reducer = (state, action) => {
   switch(action.type) {
-    case addTag: return produce(state, draft => {
-      // TODO
+    case addTag: {
+      const foundIndex = state.findIndex(t => t.id === action.tag.id);
+      if (foundIndex !== -1) {
+        console.error('Tag', action.tag.name, 'already exists; skipping');
+        return state;
+      }
+
+      return produce(state, draft => {
+        draft.push(action.tag);
+      });
+    }
+
+    case removeTag: return produce(state, draft => {
+      const index = draft.findIndex(t => t.id === action.id);
+      // TODO: handle index -1
+      draft.splice(index, 1);
     });
 
-    case removeTag:  return produce(state, draft => {
-      // TODO
-    });
+    case updateTag: return produce(state, draft => {
+      const index = draft.findIndex(t => t.id === action.id);
 
-    case updateTag:  return produce(state, draft => {
-      // TODO
+      draft[index] = {
+        ...draft[index],
+        ...action.newFields
+      }
     });
 
     case addItemToTag: return produce(state, draft => {

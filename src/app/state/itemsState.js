@@ -53,15 +53,17 @@ export const actions = {
 
 export const reducer = (state, action) => {
   switch(action.type) {
-    case addItem: return produce(state, draft => {
+    case addItem: {
       const foundIndex = state.findIndex(i => i.id === action.item.id);
       if (foundIndex !== -1) {
         console.error('Item', action.item.name, 'already exists; skipping');
         return state;
       }
 
-      draft.push(action.item);
-    });
+      return produce(state, draft => {
+        draft.push(action.item);
+      });
+    }
 
     case removeItem: return produce(state, draft => {
       const index = draft.findIndex(i => i.id === action.id);

@@ -30,7 +30,7 @@ const App = () => {
     <main>
       <Router id='content'>
         <MainListView path='/*' />
-        <TagsListView path='/tags' />
+        <TagsListView path='/tags/*' />
         <ItemsListView path='/items/*' />
         <SettingsView path='/settings' />
       </Router>
