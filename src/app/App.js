@@ -28,7 +28,7 @@ const App = () => {
   return (
     <main>
       <Router id='content'>
-        <MainListView path='/' />
+        <MainListView path='/*' />
         <TagsListView path='/tags' />
         <ItemsListView path='/items/*' />
         <SettingsView path='/settings' />

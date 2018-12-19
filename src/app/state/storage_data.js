@@ -1,12 +1,14 @@
 let count = 0;
 
+const randomBool = (chance) => Math.random() > 1-chance;
+
 const newItem = (name, price, tags = []) => ({
   id: count++, // temp id, just to serve as a unique key
   name,
   price,
   tags,
   completed: false,
-  listed: false,
+  listed: randomBool(.4),
 });
 
 export default({
