@@ -12,11 +12,12 @@ import useFilterState, { applyFilters } from '../hooks/useFilterState';
 // components
 import FilterBar from '../components/FilterBar';
 
-const Item = ({ name, price, onRemove, onListify }) => (
+const Item = ({ name, price, tags, onRemove, onListify }) => (
   <div>
     <Btn onClick={onRemove}>-</Btn>
     <Btn onClick={onListify}>+</Btn>
     ${price} {name}
+    ({ tags.map(t => <span key={t}>{t}, </span>)})
   </div>
 );
 
