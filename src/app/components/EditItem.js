@@ -7,9 +7,13 @@ import { ItemsContext } from '../context';
 import { actions } from '../state/itemsState';
 
 const EditItem = ({ itemID, onCancel }) => {
+  if (itemID == null) return null;
+  itemID = parseInt(itemID);
+
   const { state, dispatch } = useContext(ItemsContext);
   // get item properties
   const item = state.find(i => i.id === itemID);
+  if (item == null) return null;
 
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(item.price);

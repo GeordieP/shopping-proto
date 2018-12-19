@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { Router } from '@reach/router';
 
 // context & state management
 import { ItemsContext, ListContext } from '../context';
@@ -35,12 +36,10 @@ const ItemList = ({ items, onRemoveItem, onListifyItem, onEditItem }) => {
   );
 }
 
-export default () => {
+export default ({ navigate }) => {
   const { state, dispatch: itemsDispatch } = useContext(ItemsContext);
   const { dispatch: listDispatch } = useContext(ListContext);
   const { filters, updateFilter, removeFilter } = useFilterState();
-  const [itemToEdit, setItemToEdit] = useState(-1);
-  const [showEditModal, setShowEditModal] = useState(false);
   const items = applyFilters(filters, state);
 
   const onRemoveItem = (id) => {
@@ -51,15 +50,8 @@ export default () => {
     listDispatch(listActions.addListItem(item));
   }
 
-  const onEditItem = (itemID) => {
-    setItemToEdit(itemID);
-    setShowEditModal(true);
-  }
-
-  const onCancelEditItem = () => {
-    setItemToEdit(-1);
-    setShowEditModal(false);
-  }
+  const onEditItem = (itemID) => navigate(`edit/${itemID}`);
+  const onCancelEditItem = () => navigate(`/items`);
 
   return (
     <>
@@ -74,9 +66,10 @@ export default () => {
         filters={filters}
       />
 
-      { itemToEdit !== -1 && showEditModal && (
-        <EditItemModal itemID={itemToEdit} onCancel={onCancelEditItem} />
-      )}
+      <Router>
+        <EditItemModal path='/edit/:itemID' onCancel={onCancelEditItem} />
+      </Router>
     </>
   );
+
 }
