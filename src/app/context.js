@@ -8,6 +8,12 @@ import {
   initialState as itemsInitialState
 } from './state/itemsState';
 
+// TAGS
+import {
+  reducer as tagsReducer,
+  initialState as tagsInitialState
+} from './state/tagsState';
+
 // -- CONTEXT -- //
 
 // ITEMS
@@ -16,6 +22,14 @@ export const ItemsContextProvider = createProvider(
   itemsReducer,
   itemsInitialState,
   ItemsContext
+);
+
+// TAGS
+export const TagsContext = createContext();
+export const TagsContextProvider = createProvider(
+  tagsReducer,
+  tagsInitialState,
+  TagsContext
 );
 
 // -- MISC -- //

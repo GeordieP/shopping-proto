@@ -13,6 +13,7 @@ import '@reach/dialog/styles.css';
 // context
 import {
   ItemsContextProvider,
+  TagsContextProvider,
 } from './context';
 
 // components
@@ -41,6 +42,8 @@ const App = () => {
 
 export default () => (
   <ItemsContextProvider>
+    <TagsContextProvider>
     <App />
+    </TagsContextProvider>
   </ItemsContextProvider>
 );

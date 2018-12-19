@@ -11,8 +11,15 @@ const newItem = (name, price, tags = []) => ({
   listed: randomBool(.4),
 });
 
+let tagCount = 0;
+const newTag = (name) => ({
+  id: tagCount++, // temp id, just to serve as a unique key
+  name,
+  items: [],
+  color: 'blueviolet'
+});
+
 export default({
-  list: [],
   items: [
     newItem('Corn', '0.00', ['one', 'two', 'three']),
     newItem('Rice', '0.00', ['one']),
@@ -26,4 +33,10 @@ export default({
     newItem('Hot Dogs', '0.00', ['three']),
     newItem('Carrots', '0.00', ['three', 'two']),
   ],
+  tags: [
+    newTag('Grocery Store'),
+    newTag('Vegetables'),
+    newTag('Meat'),
+    newTag('Bread'),
+  ]
 });
