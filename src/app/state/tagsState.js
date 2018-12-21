@@ -28,12 +28,16 @@ export const actions = {
     newFields
   }),
 
-  addItemToTag: () => ({
-    // TODO
+  addItemToTag: (id, itemID) => ({
+    type: addItemToTag,
+    id,
+    itemID
   }),
 
-  removeItemFromTag: () => ({
-    // TODO
+  removeItemFromTag: (id, itemID) => ({
+    type: removeItemFromTag,
+    id,
+    itemID
   }),
 };
 
@@ -52,6 +56,7 @@ export const reducer = (state, action) => {
     }
 
     case removeTag: return produce(state, draft => {
+      // TODO: remove the tag ID from all items that have it
       const index = draft.findIndex(t => t.id === action.id);
       // TODO: handle index -1
       draft.splice(index, 1);
@@ -67,11 +72,16 @@ export const reducer = (state, action) => {
     });
 
     case addItemToTag: return produce(state, draft => {
-      // TODO
+      const index = draft.findIndex(t => t.id === action.id);
+      draft[index].items.push(action.itemID);
     });
 
     case removeItemFromTag:  return produce(state, draft => {
-      // TODO
+      const index = draft.findIndex(t => t.id === action.id);
+      const tag = draft[index];
+      const itemIndex = tag.items.findIndex(i => i.id === action.itemID);
+      
+      tag.items.splice(itemIndex, 1);
     });
 
     default: return state;

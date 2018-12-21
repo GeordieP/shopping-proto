@@ -40,8 +40,9 @@ export default ({ navigate }) => {
   const { state, dispatch } = useContext(TagsContext);
   const { filters, updateFilter, removeFilter } = useFilterState();
   const tags = applyFilters(filters, state);
-  
+
   const onRemoveTag = (id) => {
+    // TODO: also remove the tag ID from all items that have it
     dispatch(actions.removeTag(id));
   }
 

@@ -8,6 +8,8 @@ export const initialState = storage.items;
 const addItem = Symbol()
 const removeItem = Symbol();
 const updateItem = Symbol();
+const addTag = Symbol();
+const removeTag = Symbol();
 
 export const actions = {
   addItem: (item) => ({
@@ -49,6 +51,18 @@ export const actions = {
     id,
     newFields: { listed: false }
   }),
+
+  addTag: (id, tagID) => ({
+    type: addTag,
+    id,
+    tagID
+  }),
+
+  removeTag: (id, tagID) => ({
+    type: removeTag,
+    id,
+    tagID
+  }),
 };
 
 export const reducer = (state, action) => {
@@ -78,6 +92,19 @@ export const reducer = (state, action) => {
         ...draft[index],
         ...action.newFields
       }
+    });
+
+    case addTag: return produce(state, draft => {
+      const index = draft.findIndex(i => i.id === action.id);
+      draft[index].tags.push(action.tagID);
+    });
+
+    case removeTag: return produce(state, draft => {
+      const index = draft.findIndex(i => i.id === action.id);
+      const item = draft[index];
+      const tagIndex = item.tags.findIndex(t => t.id === action.tagID);
+
+      item.tags.splice(tagIndex, 1);
     });
 
     default: return state;

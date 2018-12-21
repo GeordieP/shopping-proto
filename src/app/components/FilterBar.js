@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import produce from 'immer';
 
 import { arrayContainsArray } from '../../util';
+
+// context & state management
+import { TagsContext } from '../context';
 
 const FilterBar = styled.div`
   display: flex;
@@ -20,7 +23,7 @@ const Tag = ({ tag, toggleTag }) => {
 
   const toggle = () => {
     const newState = !toggled;
-    toggleTag(tag, newState);
+    toggleTag(tag.id, newState);
     setToggled(newState);
   }
 
@@ -28,7 +31,7 @@ const Tag = ({ tag, toggleTag }) => {
     <TagListItem>
       <input id='toggled' type='checkbox' checked={toggled} readOnly disabled />
 
-      <button onClick={toggle}>{tag}</button>
+      <button onClick={toggle}>{tag.name}</button>
     </TagListItem>
   );
 }
@@ -37,7 +40,7 @@ const TagFilter = ({ tags, toggleTag }) =>
   tags.map(t => (
     <Tag
       tag={t}
-      key={t}
+      key={t.id}
       toggleTag={toggleTag}
     />
   ));
@@ -46,6 +49,7 @@ export default ({ updateFilter, removeFilter }) => {
   const [searchValue, setSearchValue] = useState('');
   const [completed, setCompleted] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
+  const { state: allTags } = useContext(TagsContext);
 
   const updateSearch = (e) => {
     const { value } = e.currentTarget;
@@ -67,21 +71,18 @@ export default ({ updateFilter, removeFilter }) => {
     setCompleted(newCompleted);
   }
 
-  const toggleTag = (tag, enabled) => {
+  const toggleTag = (tagID, enabled) => {
     const newTags = produce(selectedTags, draft => {
       // add if enabled, remove if not
       if (enabled)
-        draft.push(tag);
+        draft.push(tagID);
       else
-        draft.splice(draft.indexOf(tag), 1);
+        draft.splice(draft.indexOf(tagID), 1);
     });
 
     updateFilter('tags', (item) => arrayContainsArray(newTags, item.tags));
     setSelectedTags(newTags);
   }
-
-  // TODO: use tags context to get all tags
-  const allTags = ['one', 'two', 'three']; // TEMP
 
   return (
     <FilterBar>
