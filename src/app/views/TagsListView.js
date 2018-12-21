@@ -6,7 +6,10 @@ import { Router } from '@reach/router';
 
 // context & state management
 import { TagsContext } from '../context';
-import { actions } from '../state/tagsState';
+import { actions as tagsActions } from '../state/tagsState';
+
+import { ItemsContext } from '../context';
+import { actions as itemsActions } from '../state/itemsState';
 
 // hooks
 import useFilterState, { applyFilters } from '../hooks/useFilterState';
@@ -41,9 +44,14 @@ export default ({ navigate }) => {
   const { filters, updateFilter, removeFilter } = useFilterState();
   const tags = applyFilters(filters, state);
 
+  const { dispatch: itemsDispatch } = useContext(ItemsContext);
+
   const onRemoveTag = (id) => {
-    // TODO: also remove the tag ID from all items that have it
-    dispatch(actions.removeTag(id));
+    // remove the tag from all items that reference it
+    itemsDispatch(itemsActions.removeTagFromAll(id));
+
+    // delete the tag itself
+    dispatch(tagsActions.removeTag(id));
   }
 
   const onEditTag = (tagID) => navigate(`edit/${tagID}`);

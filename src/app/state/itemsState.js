@@ -10,6 +10,7 @@ const removeItem = Symbol();
 const updateItem = Symbol();
 const addTag = Symbol();
 const removeTag = Symbol();
+const removeTagFromAll = Symbol();
 
 export const actions = {
   addItem: (item) => ({
@@ -63,6 +64,11 @@ export const actions = {
     id,
     tagID
   }),
+
+  removeTagFromAll: (tagID) => ({
+    type: removeTagFromAll,
+    tagID
+  }),
 };
 
 export const reducer = (state, action) => {
@@ -105,6 +111,16 @@ export const reducer = (state, action) => {
       const tagIndex = item.tags.findIndex(t => t.id === action.tagID);
 
       item.tags.splice(tagIndex, 1);
+    });
+
+    // remove a given tag ID from every item
+    case removeTagFromAll: return produce(state, draft => {
+      draft.forEach(item => {
+        const indexOfTag = item.tags.indexOf(action.tagID);
+        if (indexOfTag !== -1) {
+          item.tags.splice(indexOfTag, 1);
+        }
+      });
     });
 
     default: return state;

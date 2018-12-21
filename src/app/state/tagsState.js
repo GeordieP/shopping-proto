@@ -56,7 +56,6 @@ export const reducer = (state, action) => {
     }
 
     case removeTag: return produce(state, draft => {
-      // TODO: remove the tag ID from all items that have it
       const index = draft.findIndex(t => t.id === action.id);
       // TODO: handle index -1
       draft.splice(index, 1);
@@ -80,7 +79,7 @@ export const reducer = (state, action) => {
       const index = draft.findIndex(t => t.id === action.id);
       const tag = draft[index];
       const itemIndex = tag.items.findIndex(i => i.id === action.itemID);
-      
+
       tag.items.splice(itemIndex, 1);
     });
 
