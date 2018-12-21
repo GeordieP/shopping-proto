@@ -18,11 +18,11 @@ import useFilterState, { applyFilters } from '../hooks/useFilterState';
 import TagFilterBar from '../components/TagFilterBar';
 import { EditTagModal } from '../components/EditTag';
 
-const Tag = ({ id, name, onRemove, onEdit }) => {
+const Tag = ({ id, name, onRemove, items, onEdit }) => {
   return (
       <p>
         <button onClick={onRemove}>-</button>
-        ({id}) {name}
+        ({id}) {name} ({items.length} items)
         <button onClick={onEdit}>Edit</button>
       </p>
   );
